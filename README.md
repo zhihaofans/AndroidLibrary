@@ -1,6 +1,6 @@
 # AndroidLibrary
 
-目录下的`android_library/`下的为本库源码,库包名`io.zhihao.library.android`
+目录下的[`android_library/`](https://github.com/zhihaofans/AndroidLibrary/tree/master/android_library/src/main/java/io/zhihao/library/android/)下的为本库源码,库包名`io.zhihao.library.android`
 
 Demo: [zhihaofans/Android.Box](https://github.com/zhihaofans/Android.Box/)
 
