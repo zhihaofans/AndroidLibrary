@@ -15,3 +15,11 @@ val EditText.int: Int
     get() = this.text.toString().toInt()
 val EditText.intOrNull: Int?
     get() = this.text.toString().toIntOrNull()
+
+fun EditText.viewGetFocusable() {
+    this.apply {
+        isFocusable = true
+        isFocusableInTouchMode = true
+        requestFocus()
+    }
+}

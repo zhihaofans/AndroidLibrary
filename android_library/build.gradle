@@ -6,12 +6,11 @@ android {
     compileSdkVersion 28
 
 
-
     defaultConfig {
         minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
-        versionName "0.0.1"
+        versionName "0.0.2"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -35,6 +34,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.android.material:material:1.1.0-alpha05'
+    implementation 'androidx.core:core-ktx:1.0.1'
 }
 
 task deleteJar(type: Delete) {
