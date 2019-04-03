@@ -4,6 +4,7 @@ import android.webkit.URLUtil
 import java.net.URI
 import java.net.URL
 import java.net.URLEncoder
+import java.nio.charset.Charset
 
 
 /**
@@ -67,3 +68,5 @@ fun String?.startWith(prefix: String, ignoreCase: Boolean = false): Boolean {
 fun String?.endWith(prefix: String, ignoreCase: Boolean = false): Boolean {
     return this?.endsWith(prefix, ignoreCase) ?: false
 }
+
+fun String.getBytes(): ByteArray = this.toByteArray(Charset.defaultCharset())

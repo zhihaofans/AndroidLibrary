@@ -17,7 +17,7 @@ import io.zhihao.library.android.kotlinEx.isNotNull
 class SharedPreferencesUtil {
     private var sharedPreferences: SharedPreferences? = null
     private var mContext: Context? = null
-    private val sharedPreferencesFileName = "android_box"
+    private val sharedPreferencesFileName = "io.zhihao.library"
     fun init(context: Context): SharedPreferences {
         this@SharedPreferencesUtil.mContext = context
         sharedPreferences = mContext!!.getSharedPreferences(sharedPreferencesFileName, MODE_PRIVATE)
@@ -74,54 +74,54 @@ class SharedPreferencesUtil {
 }
 
 class SharedPreferencesNewUtil(context: Context, sharedPreferencesFileName: String) {
-    private val sharedPreferences: SharedPreferences? =
+    private val mSharedPreferences: SharedPreferences? =
         context.getSharedPreferences(sharedPreferencesFileName, MODE_PRIVATE)
 
     fun putString(key: String, value: String): Boolean {
-        if (sharedPreferences == null) return false
-        sharedPreferences.edit {
+        if (mSharedPreferences == null) return false
+        mSharedPreferences.edit {
             putString(key, value)
         }
         return this.getString(key, null).isNotNull()
     }
 
     fun putBoolean(key: String, value: Boolean): Boolean {
-        if (sharedPreferences == null) return false
-        sharedPreferences.edit {
+        if (mSharedPreferences == null) return false
+        mSharedPreferences.edit {
             putBoolean(key, value)
         }
         return this.getBoolean(key, !value) == value
     }
 
     fun putInt(key: String, value: Int): Boolean {
-        if (sharedPreferences == null) return false
-        sharedPreferences.edit {
+        if (mSharedPreferences == null) return false
+        mSharedPreferences.edit {
             putInt(key, value)
         }
         return true
     }
 
     fun getString(key: String, defaultValue: String? = null): String? {
-        return if (sharedPreferences == null) {
+        return if (mSharedPreferences == null) {
             null
         } else {
-            sharedPreferences.getString(key, defaultValue)
+            mSharedPreferences.getString(key, defaultValue)
         }
     }
 
     fun getBoolean(key: String, defaultValue: Boolean = false): Boolean? {
-        return if (sharedPreferences == null) {
+        return if (mSharedPreferences == null) {
             null
         } else {
-            sharedPreferences.getBoolean(key, defaultValue)
+            mSharedPreferences.getBoolean(key, defaultValue)
         }
     }
 
     fun getInt(key: String, defaultValue: Int): Int? {
-        return if (sharedPreferences == null) {
+        return if (mSharedPreferences == null) {
             null
         } else {
-            sharedPreferences.getInt(key, defaultValue)
+            mSharedPreferences.getInt(key, defaultValue)
         }
     }
 }
