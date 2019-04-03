@@ -1,22 +1,27 @@
 # AndroidLibrary
 
+[![](https://jitpack.io/v/zhihaofans/AndroidLibrary.svg)](https://jitpack.io/#zhihaofans/AndroidLibrary)
+
 目录下的[`android_library/`](https://github.com/zhihaofans/AndroidLibrary/tree/master/android_library/src/main/java/io/zhihao/library/android/)下的为本库源码,库包名`io.zhihao.library.android`
 
 Demo: [zhihaofans/Android.Box](https://github.com/zhihaofans/Android.Box/)
 
 ### 使用方式:
 
-在[Releases](https://github.com/zhihaofans/AndroidLibrary/releases/latest)下载最新的aar文件到项目的`/app/libs/`目录下
-
-将 
-
-`implementation fileTree(dir: 'libs', include: ['*.jar'])`
-
-改为
-
-`implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])`
-
-
+1. 添加依赖源到项目的`build.gradle`文件
+```
+allprojects {
+	repositories {
+		maven { url 'https://jitpack.io' }
+	}
+}
+```
+2. 添加依赖到应用的`build.gradle`文件
+```
+dependencies {
+	implementation 'com.github.zhihaofans:AndroidLibrary:v${版本号}'
+}
+```
 ### 需求
 
 - Android SDK > 26
