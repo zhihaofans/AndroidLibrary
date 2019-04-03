@@ -17,3 +17,6 @@ Demo: [zhihaofans/Android.Box](https://github.com/zhihaofans/Android.Box/)
 `implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])`
 
 
+### 需求
+
+- Android SDK > 26
