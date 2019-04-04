@@ -16,6 +16,7 @@ class ClipboardUtil(context: Context) {
     private val mContext = context
     private val clipManager = SystemServiceUtil.getClipboardManager(context)
     private fun isAvailable(mimeType: String): Boolean {
+
         return clipManager.hasPrimaryClip() || clipManager.primaryClipDescription != null || clipManager.primaryClipDescription!!.hasMimeType(
             mimeType
         )
