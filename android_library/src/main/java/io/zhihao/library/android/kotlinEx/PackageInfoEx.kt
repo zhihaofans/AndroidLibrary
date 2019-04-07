@@ -1,8 +1,7 @@
 package io.zhihao.library.android.kotlinEx
 
-import android.content.Context
 import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
+import io.zhihao.library.android.util.SystemServiceUtil
 
 /**
 
@@ -11,6 +10,13 @@ import android.content.pm.PackageManager
  * @date: 2019-01-04 13:02
 
  */
-fun PackageInfo.getAppName(mContext: Context) = this.getAppName(mContext.packageManager)
+fun PackageInfo.getAppName(): String = this.applicationInfo.loadLabel(SystemServiceUtil.getPackageManager()).toString()
 
-fun PackageInfo.getAppName(mPackageManager: PackageManager) = this.applicationInfo.loadLabel(mPackageManager).toString()
+fun PackageInfo.getAppName(packageName: String): String {
+    val packageManager = SystemServiceUtil.getPackageManager()
+    return packageManager.getApplicationInfo(
+        packageName,
+        0
+    ).loadLabel(packageManager)
+        .toString()
+}

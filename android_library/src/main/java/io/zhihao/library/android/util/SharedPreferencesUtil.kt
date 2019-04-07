@@ -1,9 +1,9 @@
 package io.zhihao.library.android.util
 
-import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import io.zhihao.library.android.ZLibrary
 import io.zhihao.library.android.kotlinEx.isNotNull
 
 /**
@@ -14,9 +14,9 @@ import io.zhihao.library.android.kotlinEx.isNotNull
  * @date: 2019-04-02 16:33
 
  */
-class SharedPreferencesNewUtil(context: Context, sharedPreferencesFileName: String) {
+class SharedPreferencesUtil(sharedPreferencesFileName: String) {
     private val mSharedPreferences: SharedPreferences? =
-        context.getSharedPreferences(sharedPreferencesFileName, MODE_PRIVATE)
+        ZLibrary.getContext().getSharedPreferences(sharedPreferencesFileName, MODE_PRIVATE)
 
     fun putString(key: String, value: String): Boolean {
         if (mSharedPreferences == null) return false
@@ -43,26 +43,14 @@ class SharedPreferencesNewUtil(context: Context, sharedPreferencesFileName: Stri
     }
 
     fun getString(key: String, defaultValue: String? = null): String? {
-        return if (mSharedPreferences == null) {
-            null
-        } else {
-            mSharedPreferences.getString(key, defaultValue)
-        }
+        return mSharedPreferences?.getString(key, defaultValue)
     }
 
     fun getBoolean(key: String, defaultValue: Boolean = false): Boolean? {
-        return if (mSharedPreferences == null) {
-            null
-        } else {
-            mSharedPreferences.getBoolean(key, defaultValue)
-        }
+        return mSharedPreferences?.getBoolean(key, defaultValue)
     }
 
     fun getInt(key: String, defaultValue: Int): Int? {
-        return if (mSharedPreferences == null) {
-            null
-        } else {
-            mSharedPreferences.getInt(key, defaultValue)
-        }
+        return mSharedPreferences?.getInt(key, defaultValue)
     }
 }

@@ -1,7 +1,7 @@
 package io.zhihao.library.android.kotlinEx
 
-import android.content.Context
 import android.content.Intent
+import io.zhihao.library.android.util.SystemServiceUtil
 
 
 /**
@@ -9,8 +9,8 @@ import android.content.Intent
  */
 fun Intent?.isNull() = this == null
 
-fun Intent.getPackageName(context: Context): String? {
-    val packageManager = context.packageManager
+fun Intent.getPackageName(): String? {
+    val packageManager = SystemServiceUtil.getPackageManager()
     val packages = packageManager.queryIntentActivities(this, 0)
     for (res in packages) {
         return res.activityInfo.packageName

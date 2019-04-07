@@ -1,15 +1,15 @@
 package io.zhihao.library.android.kotlinEx
 
 import android.R.layout
-import android.content.Context
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import io.zhihao.library.android.ZLibrary
 
 /**
  * Created by zhihaofans on 2018/8/26.
  */
-fun ListView.init(context: Context, listData: List<String>) {
-    this.adapter = ArrayAdapter<String>(context, layout.simple_list_item_1, listData)
+fun ListView.init(listData: List<String>) {
+    this.adapter = ArrayAdapter<String>(ZLibrary.getContext(), layout.simple_list_item_1, listData)
 }
 
 fun ListView.removeAllItems() {

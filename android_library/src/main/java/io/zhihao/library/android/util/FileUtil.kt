@@ -1,6 +1,9 @@
 package io.zhihao.library.android.util
 
+import android.graphics.Bitmap
+import android.os.Environment
 import io.zhihao.library.android.kotlinEx.getBytes
+import io.zhihao.library.android.kotlinEx.remove
 import java.io.File
 import java.io.FileOutputStream
 
@@ -56,6 +59,17 @@ class FileUtil {
 
         }
 
+        fun saveFile(filePath: String, content: String): Boolean {
+            return try {
+                val fileName = this.getFileName(filePath) ?: return false
+                val saveTo = filePath.remove(fileName)
+                this.saveFile(saveTo, fileName, content)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                false
+            }
+        }
+
         fun saveFile(filePath: String, fileName: String, fileContent: String): Boolean {
             return if (filePath.isEmpty() || fileName.isEmpty() || fileContent.isEmpty()) {
                 false
@@ -76,6 +90,26 @@ class FileUtil {
                 }
 
             }
+        }
+
+        fun saveImageJPEG(bitmap: Bitmap, filePath: String): Boolean {
+            return this.saveImage(bitmap, filePath, Bitmap.CompressFormat.JPEG)
+        }
+
+        fun saveImageWEBP(bitmap: Bitmap, filePath: String): Boolean {
+            return this.saveImage(bitmap, filePath, Bitmap.CompressFormat.WEBP)
+        }
+
+        fun saveImagePng(bitmap: Bitmap, filePath: String): Boolean {
+            return this.saveImage(bitmap, filePath, Bitmap.CompressFormat.PNG)
+        }
+
+        fun saveImage(bitmap: Bitmap, filePath: String, imageFormat: Bitmap.CompressFormat): Boolean {
+            File(filePath).apply {
+                if (!FileUtil.createFolder(this.parent)) return false
+            }
+            return bitmap.compress(imageFormat, 100, FileOutputStream(filePath))
+                ?: false
         }
 
         fun getFileSuffix(filePath: String): String {
@@ -118,5 +152,24 @@ class FileUtil {
                 false
             }
         }
+
+        fun getPicturePath(): File {
+            return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        }
+
+        fun getPicturePathString(): String {
+            val p = getPicturePath().path
+            return if (p.endsWith("/")) p else "$p/"
+        }
+
+        fun getDownloadPath(): File {
+            return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        }
+
+        fun getDownloadPathString(): String {
+            val p = getDownloadPath().path
+            return if (p.endsWith("/")) p else "$p/"
+        }
+
     }
 }
