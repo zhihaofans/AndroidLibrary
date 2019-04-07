@@ -2,6 +2,7 @@ package io.zhihao.library.android
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 
 
 /**
@@ -9,18 +10,22 @@ import android.content.Context
  */
 class ZLibrary {
 
-    @SuppressLint("StaticFieldLeak")
-    private var mContext: Context? = null
+    companion object {
 
-    fun init(context: Context) {
-        this.mContext = context.applicationContext
-    }
+        @SuppressLint("StaticFieldLeak")
+        private var mContext: Context? = null
 
-    fun getContext(): Context? {
-        if (mContext == null) {
-            throw  NullPointerException("请先调用init()方法")
-        } else {
-            return mContext
+        fun init(context: Context) {
+            ZLibrary.mContext = context.applicationContext
+            Log.d("ZLibrary.init", "yes")
+        }
+
+        fun getContext(): Context {
+            if (mContext == null) {
+                throw  NullPointerException("请先调用init()方法")
+            } else {
+                return mContext!!
+            }
         }
     }
 }
