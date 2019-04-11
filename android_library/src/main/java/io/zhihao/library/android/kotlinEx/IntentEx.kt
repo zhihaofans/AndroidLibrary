@@ -31,9 +31,19 @@ val Intent.isTypeTextPlain: Boolean
         }
     }
 
+val Intent.isActionProcessText: Boolean
+    get() = this.action == Intent.ACTION_PROCESS_TEXT
 fun Intent.getTextPlain(): String? {
     return if (this.isTypeTextPlain) {
         this.getStringExtra(Intent.EXTRA_TEXT)
+    } else {
+        null
+    }
+}
+
+fun Intent.getProcessText(): String? {
+    return if (this.isActionProcessText) {
+        this.getStringExtra(Intent.EXTRA_PROCESS_TEXT)
     } else {
         null
     }
