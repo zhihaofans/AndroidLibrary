@@ -16,7 +16,7 @@ class ZLibrary {
         private var mContext: Context? = null
 
         fun init(context: Context) {
-            ZLibrary.mContext = context.applicationContext
+            this.mContext = context.applicationContext
             Log.d("ZLibrary.init", "yes")
         }
 

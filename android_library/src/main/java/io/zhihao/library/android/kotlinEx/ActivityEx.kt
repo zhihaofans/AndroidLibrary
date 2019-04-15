@@ -1,6 +1,7 @@
 package io.zhihao.library.android.kotlinEx
 
 import android.app.Activity
+import android.content.pm.ActivityInfo
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import io.zhihao.library.android.util.SystemServiceUtil
@@ -19,3 +20,5 @@ fun Activity.closeKeyboard() {
         0
     )
 }
+
+fun ActivityInfo.getLabel(): String = this.loadLabel(SystemServiceUtil.getPackageManager()).toString()
