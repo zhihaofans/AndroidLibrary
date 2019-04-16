@@ -7,6 +7,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.view.LayoutInflater
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -56,6 +57,10 @@ class SystemServiceUtil {
 
         fun getConnectivityManager(): ConnectivityManager {
             return getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        }
+
+        fun getWifiManager(): WifiManager {
+            return getSystemService(Context.WIFI_SERVICE) as WifiManager
         }
     }
 }
