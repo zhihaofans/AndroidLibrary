@@ -1,6 +1,5 @@
 package io.zhihao.library.android.util
 
-import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.app.NotificationManager
 import android.content.ClipboardManager
@@ -23,15 +22,12 @@ import io.zhihao.library.android.ZLibrary
  */
 class SystemServiceUtil {
     companion object {
-        @SuppressLint("StaticFieldLeak")
-        private val mContext = ZLibrary.getContext()
-
         private fun getSystemService(serviceName: String): Any? {
-            return mContext.getSystemService(serviceName)
+            return ZLibrary.getContext().getSystemService(serviceName)
         }
 
         fun getPackageManager(): PackageManager {
-            return mContext.packageManager
+            return ZLibrary.getContext().packageManager
         }
 
         fun getDownloadManager(): DownloadManager {
