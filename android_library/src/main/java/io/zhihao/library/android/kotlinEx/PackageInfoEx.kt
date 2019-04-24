@@ -11,12 +11,3 @@ import io.zhihao.library.android.util.SystemServiceUtil
 
  */
 fun PackageInfo.getAppName(): String = this.applicationInfo.loadLabel(SystemServiceUtil.getPackageManager()).toString()
-
-fun PackageInfo.getAppName(packageName: String): String {
-    val packageManager = SystemServiceUtil.getPackageManager()
-    return packageManager.getApplicationInfo(
-        packageName,
-        0
-    ).loadLabel(packageManager)
-        .toString()
-}
