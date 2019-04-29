@@ -16,7 +16,7 @@ import io.zhihao.library.android.kotlinEx.isNotNull
  */
 class SharedPreferencesUtil(sharedPreferencesFileName: String) {
     private val mSharedPreferences: SharedPreferences? =
-        ZLibrary.getContext().getSharedPreferences(sharedPreferencesFileName, MODE_PRIVATE)
+        ZLibrary.getAppContext().getSharedPreferences(sharedPreferencesFileName, MODE_PRIVATE)
 
     fun putString(key: String, value: String): Boolean {
         if (mSharedPreferences == null) return false

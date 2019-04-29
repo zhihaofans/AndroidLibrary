@@ -23,11 +23,11 @@ import io.zhihao.library.android.ZLibrary
 class SystemServiceUtil {
     companion object {
         private fun getSystemService(serviceName: String): Any? {
-            return ZLibrary.getContext().getSystemService(serviceName)
+            return ZLibrary.getAppContext().getSystemService(serviceName)
         }
 
         fun getPackageManager(): PackageManager {
-            return ZLibrary.getContext().packageManager
+            return ZLibrary.getAppContext().packageManager
         }
 
         fun getDownloadManager(): DownloadManager {

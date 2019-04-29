@@ -18,15 +18,16 @@ import java.io.FileOutputStream
 class FileUtil {
     companion object {
         // File
-        fun getFileSize(path: String): Long {
-            return if (path.isEmpty()) -1 else this.getFileSize(File(path))
+        fun isFileExists(filePath: String): Boolean {
+            return this.isFileExists(this.getFileByPath(filePath))
         }
 
-        fun getFileSize(file: File): Long {
-            return if (file.exists() && file.isFile) file.length() else -1
+        fun isFileExists(file: File?): Boolean {
+            return file?.exists() ?: false
         }
 
         fun fileSizeLong2string(fileSize: Long): String = this.fileSizeInt2string(fileSize.toInt())
+
         fun fileSizeInt2string(fileSize: Int): String {
             var result = fileSize.toFloat()
             var times = 0
@@ -38,11 +39,43 @@ class FileUtil {
             return if (times >= units.size) "$fileSize B" else "$result ${units[times]}"
         }
 
+        fun getFileSize(path: String): Long {
+            return if (path.isEmpty()) -1 else this.getFileSize(File(path))
+        }
+
+        fun getFileSize(file: File): Long {
+            return if (file.exists() && file.isFile) file.length() else -1
+        }
+
+
         fun getFileName(filePath: String?): String? {
             if (filePath.isNullOrEmpty()) return null
             val lastSep = filePath.lastIndexOf(File.separator)
             return if (lastSep == -1) filePath else filePath.substring(lastSep + 1)
         }
+
+        fun getFileByPath(filePath: String): File? {
+            return if (filePath.isEmpty()) {
+                null
+            } else {
+                File(filePath)
+            }
+        }
+
+        fun getFileSuffix(filePath: String): String {
+            val suffix = this.getFileSuffixWithoutDot(filePath)
+            return if (suffix.isEmpty()) "" else ".$suffix"
+        }
+
+        fun getFileSuffixWithoutDot(filePath: String): String {
+            // 无小数点
+            val fileName = this.getFileName(filePath)
+            return when {
+                fileName.isNullOrEmpty() || fileName.indexOf(".") < 0 -> ""
+                else -> fileName.split(".").last()
+            }
+        }
+
 
         fun deleteFile(filePath: String): Boolean = this.deleteFile(File(filePath))
         fun deleteFile(file: File): Boolean {
@@ -110,20 +143,6 @@ class FileUtil {
             }
             return bitmap.compress(imageFormat, 100, FileOutputStream(filePath))
                 ?: false
-        }
-
-        fun getFileSuffix(filePath: String): String {
-            val suffix = this.getFileSuffixWithoutDot(filePath)
-            return if (suffix.isEmpty()) "" else ".$suffix"
-        }
-
-        fun getFileSuffixWithoutDot(filePath: String): String {
-            // 无小数点
-            val fileName = this.getFileName(filePath)
-            return when {
-                fileName.isNullOrEmpty() || fileName.indexOf(".") < 0 -> ""
-                else -> fileName.split(".").last()
-            }
         }
 
         // Folder

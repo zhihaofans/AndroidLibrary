@@ -18,7 +18,7 @@ import io.zhihao.library.android.ZLibrary
 
 class ShortcutsUtil {
 
-    private val mContext = ZLibrary.getContext()
+    private val mContext = ZLibrary.getAppContext()
     private val shortcutManager = mContext.getSystemService(ShortcutManager::class.java)
 
     fun addPinShortcut(id: String, intent: Intent, shortcutName: String, icon: Icon): Boolean {

@@ -1,14 +1,17 @@
 package io.zhihao.library.android.util
 
 import android.app.WallpaperManager
+import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import androidx.annotation.RequiresPermission
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.graphics.drawable.toBitmap
 import io.zhihao.library.android.ZLibrary
 import io.zhihao.library.android.kotlinEx.collapseNotificationBar
 import io.zhihao.library.android.kotlinEx.getAppName
+import java.io.File
 
 
 /**
@@ -23,7 +26,7 @@ class AppUtil {
     companion object {
         fun isDebug(): Boolean {
             return try {
-                this.isAppDebug(ZLibrary.getContext().packageName)
+                this.isAppDebug(ZLibrary.getAppContext().packageName)
             } catch (e: Exception) {
                 e.printStackTrace()
                 false
@@ -31,15 +34,15 @@ class AppUtil {
         }
 
         fun collapseNotificationBar() {
-            ZLibrary.getContext().collapseNotificationBar()
+            ZLibrary.getAppContext().collapseNotificationBar()
         }
 
         fun getWallpaperBitmap(): Bitmap? {
-            val wmInstance = WallpaperManager.getInstance(ZLibrary.getContext())
+            val wmInstance = WallpaperManager.getInstance(ZLibrary.getAppContext())
             return if (wmInstance.isWallpaperSupported) wmInstance.drawable.toBitmap() else null
         }
 
-        fun getString(stringRes: Int, formatArgs: Any? = null): String = ZLibrary.getContext().getString(
+        fun getString(stringRes: Int, formatArgs: Any? = null): String = ZLibrary.getAppContext().getString(
             stringRes,
             formatArgs
         )
@@ -73,19 +76,21 @@ class AppUtil {
         }
 
         fun isSystemApp(packageName: String): Boolean {
-            if (packageName.isEmpty()) return false
-            if (!this.isAppInstalled(packageName)) return false
-            return try {
-                val appInfo = SystemServiceUtil.getPackageManager()
-                    .getApplicationInfo(packageName, 0)
-                (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
-            } catch (e: Exception) {
-                e.printStackTrace()
-                false
+            return when {
+                packageName.isEmpty() -> false
+                !this.isAppInstalled(packageName) -> false
+                else -> try {
+                    val appInfo = SystemServiceUtil.getPackageManager()
+                        .getApplicationInfo(packageName, 0)
+                    (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    false
+                }
             }
         }
 
-        fun getAppVersionCode(): Int? = this.getAppVersionCode(ZLibrary.getContext().packageName)
+        fun getAppVersionCode(): Int? = this.getAppVersionCode(ZLibrary.getAppContext().packageName)
         fun getAppVersionCode(packageName: String): Int? {
             if (packageName.isEmpty()) return -1
             return try {
@@ -99,7 +104,7 @@ class AppUtil {
             }
         }
 
-        fun getAppVersionName(): String? = this.getAppVersionName(ZLibrary.getContext().packageName)
+        fun getAppVersionName(): String? = this.getAppVersionName(ZLibrary.getAppContext().packageName)
         fun getAppVersionName(packageName: String): String? {
             return if (this.isAppInstalled(packageName)) {
                 try {
@@ -139,5 +144,53 @@ class AppUtil {
                 null
             }
         }
+
+        fun getInstalledAppList(): MutableList<ApplicationInfo>? {
+            return SystemServiceUtil.getPackageManager().getInstalledApplications(0)
+        }
+
+        fun launchApp(packageName: String): Boolean {
+            val mIntent = IntentUtil.getLaunchAppIntent(packageName)
+            return try {
+                this.startActivity(mIntent ?: return false)
+                true
+            } catch (e: Exception) {
+                e.printStackTrace()
+                false
+            }
+        }
+
+        @RequiresPermission(android.Manifest.permission.REQUEST_INSTALL_PACKAGES)
+        fun installApp(filePath: String, authority: String): Boolean {
+            return this.installApp(FileUtil.getFileByPath(filePath) ?: return false, authority)
+        }
+
+        @RequiresPermission(android.Manifest.permission.REQUEST_INSTALL_PACKAGES)
+        fun installApp(file: File, authority: String): Boolean {
+            return if (FileUtil.isFileExists(file)) {
+                try {
+                    this.startActivity(IntentUtil.getInstallAppIntent(file, authority, true) ?: return false)
+                    true
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    false
+                }
+            } else {
+                false
+            }
+        }
+
+        fun uninstallApp(packageName: String): Boolean {
+            return if (this.isAppInstalled(packageName)) {
+                val mIntent = IntentUtil.getUninstallAppIntent(packageName, true) ?: return false
+                this.startActivity(mIntent)
+                false
+            } else {
+                false
+            }
+
+        }
+
+        fun startActivity(mIntent: Intent) = ZLibrary.getAppContext().startActivity(mIntent)
     }
 }

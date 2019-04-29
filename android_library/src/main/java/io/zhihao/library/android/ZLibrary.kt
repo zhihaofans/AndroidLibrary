@@ -20,7 +20,9 @@ class ZLibrary {
             Log.d("ZLibrary.init", "yes")
         }
 
-        fun getContext(): Context {
+        fun getContext() = this.getAppContext()
+
+        fun getAppContext(): Context {
             if (mContext == null) {
                 throw  NullPointerException("请先调用init()方法")
             } else {
