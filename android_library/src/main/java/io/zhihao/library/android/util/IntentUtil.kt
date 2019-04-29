@@ -110,7 +110,10 @@ class IntentUtil {
             return getIntent(Intent(Intent.ACTION_DELETE).apply {
                 data = Uri.parse("package:$packageName")
             }, isNewTask)
+        }
 
+        fun getNotifyMediaStoreIntent(file: File): Intent {
+            return Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file))
         }
     }
 }

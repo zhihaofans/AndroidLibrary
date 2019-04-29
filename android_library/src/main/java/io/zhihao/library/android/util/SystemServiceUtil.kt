@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
+import android.telephony.TelephonyManager
 import android.view.LayoutInflater
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -57,6 +58,10 @@ class SystemServiceUtil {
 
         fun getWifiManager(): WifiManager {
             return getSystemService(Context.WIFI_SERVICE) as WifiManager
+        }
+
+        fun getTelephonyManager(): TelephonyManager {
+            return getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         }
     }
 }
