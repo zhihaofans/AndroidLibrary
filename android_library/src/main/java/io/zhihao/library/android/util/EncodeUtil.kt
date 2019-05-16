@@ -1,6 +1,8 @@
 package io.zhihao.library.android.util
 
+import android.graphics.Bitmap
 import android.util.Base64
+import java.io.ByteArrayOutputStream
 import java.net.URLDecoder
 import java.net.URLEncoder
 
@@ -93,6 +95,18 @@ class EncodeUtil {
                     e.printStackTrace()
                     null
                 }
+            }
+        }
+
+        fun bitmapToBase64String(bitmap: Bitmap): String? {
+            return try {
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+                val byteArray = byteArrayOutputStream.toByteArray()
+                Base64.encodeToString(byteArray, Base64.DEFAULT)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
             }
         }
     }
