@@ -19,8 +19,6 @@ fun String.find(string: String, startIndex: Int = 0, ignoreCase: Boolean = false
 
 fun String.remove(removeString: String, ignoreCase: Boolean = false) = this.replace(removeString, "", ignoreCase)
 
-fun String.replaces(list: Map<String, String>, ignoreCase: Boolean = false) = this.replaceByList(list, ignoreCase)
-
 fun String.replaceByList(list: Map<String, String>, ignoreCase: Boolean = false): String {
     var mStr = this
     list.map {

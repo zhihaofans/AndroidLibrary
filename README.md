@@ -25,3 +25,11 @@ dependencies {
 ### 需求
 
 - Android SDK > 26
+
+
+### 更新记录
+
+以[提交记录](https://github.com/zhihaofans/AndroidLibrary/commits/master)为准
+
+- [AndroidLibrary/releases](https://github.com/zhihaofans/AndroidLibrary/releases)
+

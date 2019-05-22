@@ -139,10 +139,9 @@ class FileUtil {
 
         fun saveImage(bitmap: Bitmap, filePath: String, imageFormat: Bitmap.CompressFormat): Boolean {
             File(filePath).apply {
-                if (!FileUtil.createFolder(this.parent)) return false
+                if (!createFolder(this.parent)) return false
             }
             return bitmap.compress(imageFormat, 100, FileOutputStream(filePath))
-                ?: false
         }
 
         // Folder
