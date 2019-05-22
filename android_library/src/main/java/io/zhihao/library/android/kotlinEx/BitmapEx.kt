@@ -11,4 +11,4 @@ import io.zhihao.library.android.util.EncodeUtil
  * @date: 2019-05-16 22:00
 
  */
-fun Bitmap.getBase64String(): String? = EncodeUtil.bitmapToBase64String(this)
+fun Bitmap.toBase64String(): String? = EncodeUtil.bitmapToBase64String(this)
