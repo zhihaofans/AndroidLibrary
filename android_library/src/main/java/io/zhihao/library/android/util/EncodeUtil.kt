@@ -17,7 +17,74 @@ import java.net.URLEncoder
 class EncodeUtil {
     // 参考:https://github.com/afkT/DevUtils/blob/master/DevLibUtils/src/main/java/dev/utils/app/EncodeUtils.java
     companion object {
-        //Url encode
+        // 半角/全角
+        fun toDBC(string: String): String? {
+            // 半角
+            return if (string.isEmpty()) {
+                ""
+            } else {
+                try {
+                    val chars = string.toCharArray()
+                    var i = 0
+                    while (i < chars.size) {
+                        when {
+                            chars[i].toInt() == 12288 -> chars[i] = ' '
+                            chars[i].toInt() in 65281..65374 -> chars[i] = (chars[i].toInt() - 65248).toChar()
+                            else -> chars[i] = chars[i]
+                        }
+                        i++
+                    }
+                    String(chars)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    null
+                }
+            }
+        }
+
+        fun toSBC(string: String): String? {
+            // 全角
+            return if (string.isEmpty()) {
+                ""
+            } else {
+                try {
+                    val chars = string.toCharArray()
+                    var i = 0
+                    while (i < chars.size) {
+                        when {
+                            chars[i] == ' ' -> chars[i] = 12288.toChar()
+                            chars[i].toInt() in 33..126 -> chars[i] = (chars[i].toInt() + 65248).toChar()
+                            else -> chars[i] = chars[i]
+                        }
+                        i++
+                    }
+                    String(chars)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    null
+                }
+            }
+        }
+
+        // Unicode
+        fun toUnicode(string: String): String? {
+            return if (string.isEmpty()) {
+                ""
+            } else {
+                try {
+                    StringBuffer().apply {
+                        string.toCharArray().map {
+                            append("\\u").append(Integer.toHexString(it.toInt()))
+                        }
+                    }.toString()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    null
+                }
+            }
+        }
+
+        // Url encode
         fun urlEncode(url: String, charsetName: String = "UTF-8"): String? {
             return if (url.isEmpty()) {
                 ""
