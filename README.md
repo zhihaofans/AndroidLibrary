@@ -19,7 +19,7 @@ allprojects {
 2. 添加依赖到应用的`build.gradle`文件
 ```
 dependencies {
-	implementation 'io.zhihao:AndroidLibrary:v${版本号}'
+	implementation 'io.zhihao:AndroidLibrary:${版本号}'
 }
 ```
 ### 需求
