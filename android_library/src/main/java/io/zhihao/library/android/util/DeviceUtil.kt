@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import android.os.Build
 import android.telephony.TelephonyManager
 import io.zhihao.library.android.ZLibrary
+import io.zhihao.library.android.kotlinEx.toLowerCase
 
 /**
  * 在此写用途

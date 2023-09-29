@@ -2,10 +2,10 @@ package io.zhihao.library.android.util
 
 import android.graphics.Bitmap
 import android.util.Base64
+import io.zhihao.library.android.kotlinEx.toIntNew
 import java.io.ByteArrayOutputStream
 import java.net.URLDecoder
 import java.net.URLEncoder
-
 /**
  * 在此写用途
 
@@ -28,8 +28,8 @@ class EncodeUtil {
                     var i = 0
                     while (i < chars.size) {
                         when {
-                            chars[i].toInt() == 12288 -> chars[i] = ' '
-                            chars[i].toInt() in 65281..65374 -> chars[i] = (chars[i].toInt() - 65248).toChar()
+                            chars[i].toIntNew() == 12288 -> chars[i] = ' '
+                            chars[i].toIntNew() in 65281..65374 -> chars[i] = (chars[i].toIntNew() - 65248).toChar()
                             else -> chars[i] = chars[i]
                         }
                         i++
@@ -53,7 +53,7 @@ class EncodeUtil {
                     while (i < chars.size) {
                         when {
                             chars[i] == ' ' -> chars[i] = 12288.toChar()
-                            chars[i].toInt() in 33..126 -> chars[i] = (chars[i].toInt() + 65248).toChar()
+                            chars[i].toIntNew() in 33..126 -> chars[i] = (chars[i].toIntNew() + 65248).toChar()
                             else -> chars[i] = chars[i]
                         }
                         i++
@@ -74,7 +74,7 @@ class EncodeUtil {
                 try {
                     StringBuffer().apply {
                         string.toCharArray().map {
-                            append("\\u").append(Integer.toHexString(it.toInt()))
+                            append("\\u").append(Integer.toHexString(it.toIntNew()))
                         }
                     }.toString()
                 } catch (e: Exception) {
