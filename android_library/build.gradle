@@ -1,7 +1,7 @@
 //apply plugin: 'com.android.library'
 //apply plugin: 'kotlin-android'
 //apply plugin: 'kotlin-android-extensions'
-//apply lugin: 'com.github.dcendents.android-mavenp'
+//apply plugin: 'com.github.dcendents.android-mavenp'
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
@@ -11,10 +11,10 @@ plugins {
 }
 group = 'com.github.zhihaofans'
 android {
-    compileSdk 33
+    compileSdk 34
     defaultConfig {
         minSdkVersion 26
-        targetSdkVersion 33
+        targetSdkVersion 34
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
@@ -24,8 +24,8 @@ android {
         }
     }
     compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     namespace 'io.zhihao.library.android'
 }
@@ -46,11 +46,11 @@ repositories {
     mavenCentral()
 }
 
-tasks.register('deleteJar', Delete) {
-    delete 'libs/AndroidLibrary-debug.aar'
+task deleteJar(type: Delete) {
+    delete 'libs/android_library-debug.aar'
 }
 
-tasks.register('createJar', Copy) {
+task createJar(type: Copy) {
     from('build/intermediates/outputs/aar/')
     into('libs/')
     include('android_library-debug.aar')
