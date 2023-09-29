@@ -7,6 +7,7 @@ import java.net.URI
 import java.net.URL
 import java.net.URLEncoder
 import java.nio.charset.Charset
+import java.util.Locale
 
 
 /**
@@ -17,7 +18,8 @@ import java.nio.charset.Charset
 fun String.find(string: String, startIndex: Int = 0, ignoreCase: Boolean = false) =
     this.indexOf(string, startIndex, ignoreCase)
 
-fun String.remove(removeString: String, ignoreCase: Boolean = false) = this.replace(removeString, "", ignoreCase)
+fun String.remove(removeString: String, ignoreCase: Boolean = false) =
+    this.replace(removeString, "", ignoreCase)
 
 fun String.replaceByList(list: Map<String, String>, ignoreCase: Boolean = false): String {
     var mStr = this
@@ -48,6 +50,7 @@ fun String.endsWithList(list: List<String>): Boolean {
 }
 
 fun String.toUrl() = URL(this)
+
 // String?
 fun String?.isNotNull() = this != null
 
@@ -83,3 +86,4 @@ fun String.toSBC() = EncodeUtil.toSBC(this)
 fun String.toDBC() = EncodeUtil.toDBC(this)
 
 fun String.isChinese() = StringUtil.isChinese(this)
+fun String.toLowerCase() = this.lowercase(Locale.getDefault())
