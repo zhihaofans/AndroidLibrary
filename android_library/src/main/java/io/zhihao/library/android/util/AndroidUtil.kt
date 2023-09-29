@@ -1,5 +1,6 @@
 package io.zhihao.library.android.util
 
+import android.os.Build
 import io.zhihao.library.android.ZLibrary
 import java.io.File
 
@@ -16,7 +17,8 @@ class AndroidUtil {
         fun notifyMediaStore(file: File): Boolean {
             return if (file.isFile) {
                 try {
-                    ZLibrary.getAppContext().sendBroadcast(IntentUtil.getNotifyMediaStoreIntent(file))
+                    ZLibrary.getAppContext()
+                        .sendBroadcast(IntentUtil.getNotifyMediaStoreIntent(file))
                     true
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -25,6 +27,10 @@ class AndroidUtil {
             } else {
                 false
             }
+        }
+
+        fun isMoreThenSDKR(): Boolean {
+            return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
         }
     }
 }
