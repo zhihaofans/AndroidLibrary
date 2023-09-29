@@ -22,7 +22,7 @@ class ClipboardUtil {
         }
 
         fun copy(text: String) {
-            clipManager.primaryClip = ClipData.newPlainText(ZLibrary.getAppContext().packageName + ".text", text)
+            clipManager.setPrimaryClip(ClipData.newPlainText(ZLibrary.getAppContext().packageName + ".text", text))
         }
 
         fun paste(): String? {

@@ -37,11 +37,6 @@ class AppUtil {
             ZLibrary.getAppContext().collapseNotificationBar()
         }
 
-        fun getWallpaperBitmap(): Bitmap? {
-            val wmInstance = WallpaperManager.getInstance(ZLibrary.getAppContext())
-            return if (wmInstance.isWallpaperSupported) wmInstance.drawable.toBitmap() else null
-        }
-
         fun getString(stringRes: Int, formatArgs: Any? = null): String = ZLibrary.getAppContext().getString(
             stringRes,
             formatArgs

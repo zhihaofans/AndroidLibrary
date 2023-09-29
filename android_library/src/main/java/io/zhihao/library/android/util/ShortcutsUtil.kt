@@ -30,7 +30,8 @@ class ShortcutsUtil {
                 .setIntent(intent)
                 .build()
             val pinnedShortcutCallbackIntent = shortcutManager.createShortcutResultIntent(pinShortcutInfo)
-            val successCallback = PendingIntent.getBroadcast(mContext, 0, pinnedShortcutCallbackIntent, 0)
+            val successCallback = PendingIntent.getBroadcast(mContext, 0, pinnedShortcutCallbackIntent,
+                PendingIntent.FLAG_IMMUTABLE)
             try {
                 shortcutManager.requestPinShortcut(pinShortcutInfo, successCallback.intentSender)
             } catch (e: Exception) {
