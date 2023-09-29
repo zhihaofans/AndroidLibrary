@@ -1,9 +1,13 @@
 package io.zhihao.library.android.util
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Environment
+import androidx.annotation.RequiresApi
 import io.zhihao.library.android.kotlinEx.getBytes
 import io.zhihao.library.android.kotlinEx.remove
+import io.zhihao.library.android.util.AndroidUtil
 import java.io.File
 import java.io.FileOutputStream
 
@@ -35,7 +39,21 @@ class FileUtil {
                 result /= 1024
                 times++
             }
-            val units = mutableListOf("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "BB", "NB", "DB", "CB")
+            val units = mutableListOf(
+                "B",
+                "KB",
+                "MB",
+                "GB",
+                "TB",
+                "PB",
+                "EB",
+                "ZB",
+                "YB",
+                "BB",
+                "NB",
+                "DB",
+                "CB"
+            )
             return if (times >= units.size) "$fileSize B" else "$result ${units[times]}"
         }
 
@@ -121,7 +139,6 @@ class FileUtil {
                     e.printStackTrace()
                     false
                 }
-
             }
         }
 
@@ -129,15 +146,25 @@ class FileUtil {
             return this.saveImage(bitmap, filePath, Bitmap.CompressFormat.JPEG)
         }
 
+
+        @SuppressLint("NewApi")
         fun saveImageWEBP(bitmap: Bitmap, filePath: String): Boolean {
-            return this.saveImage(bitmap, filePath, Bitmap.CompressFormat.WEBP)
+            return if (AndroidUtil.isMoreThenSDKR()) {
+                this.saveImage(bitmap, filePath, Bitmap.CompressFormat.WEBP_LOSSLESS)
+            } else {
+                this.saveImage(bitmap, filePath, Bitmap.CompressFormat.WEBP)
+            }
         }
 
         fun saveImagePng(bitmap: Bitmap, filePath: String): Boolean {
             return this.saveImage(bitmap, filePath, Bitmap.CompressFormat.PNG)
         }
 
-        fun saveImage(bitmap: Bitmap, filePath: String, imageFormat: Bitmap.CompressFormat): Boolean {
+        fun saveImage(
+            bitmap: Bitmap,
+            filePath: String,
+            imageFormat: Bitmap.CompressFormat
+        ): Boolean {
             File(filePath).apply {
                 if (!createFolder(this.parent)) return false
             }
