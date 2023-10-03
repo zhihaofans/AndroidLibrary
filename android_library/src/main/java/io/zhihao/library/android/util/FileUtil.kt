@@ -2,12 +2,9 @@ package io.zhihao.library.android.util
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Environment
-import androidx.annotation.RequiresApi
 import io.zhihao.library.android.kotlinEx.getBytes
 import io.zhihao.library.android.kotlinEx.remove
-import io.zhihao.library.android.util.AndroidUtil
 import java.io.File
 import java.io.FileOutputStream
 
