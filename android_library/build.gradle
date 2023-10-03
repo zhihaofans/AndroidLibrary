@@ -10,7 +10,7 @@ plugins {
     id 'maven-publish'
 }
 group = 'com.github.zhihaofans'
-version = '0.0.11'
+version = '0.0.12'
 android {
     compileSdk 34
     defaultConfig {
@@ -51,7 +51,7 @@ afterEvaluate {
                 from components.release
                 groupId = "com.github.zhihaofans"
                 artifactId = 'AndroidLibrary'
-                version = '0.0.11'
+                version = '0.0.12'
             }
         }
     }

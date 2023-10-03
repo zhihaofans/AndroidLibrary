@@ -29,7 +29,7 @@ class ZLibrary {
         }
 
         fun getZLibraryVersion(): String {
-            return "0.0.11-localaar"
+            return "0.0.12"
         }
     }
 }
