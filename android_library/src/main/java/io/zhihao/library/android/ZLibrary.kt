@@ -22,10 +22,14 @@ class ZLibrary {
 
         fun getAppContext(): Context {
             if (mContext == null) {
-                throw  NullPointerException("请先调用init()方法")
+                throw NullPointerException("请先调用init()方法")
             } else {
                 return mContext!!
             }
+        }
+
+        fun getZLibraryVersion(): String {
+            return "0.0.11-localaar"
         }
     }
 }
