@@ -1,5 +1,6 @@
 package io.zhihao.library.android.util
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -62,7 +63,8 @@ class IntentUtil {
 
         fun getOpenImageFileIntent(file: File): Intent {
             val context = ZLibrary.getAppContext()
-            val contentUri = FileProvider.getUriForFile(context, context.packageName + ".fileprovider", file)
+            val contentUri =
+                FileProvider.getUriForFile(context, context.packageName + ".fileprovider", file)
             return getDefaultIntent("android.intent.action.VIEW").apply {
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 setDataAndType(contentUri, "image/*")
@@ -79,7 +81,8 @@ class IntentUtil {
         fun getLaunchAppIntent(packageName: String): Intent? {
             return if (AppUtil.isAppInstalled(packageName)) {
                 getIntent(
-                    SystemServiceUtil.getPackageManager().getLaunchIntentForPackage(packageName) ?: return null,
+                    SystemServiceUtil.getPackageManager().getLaunchIntentForPackage(packageName)
+                        ?: return null,
                     true
                 )
             } else {
@@ -90,7 +93,8 @@ class IntentUtil {
         fun getInstallAppIntent(file: File, authority: String, isNewTask: Boolean): Intent? {
             return if (FileUtil.isFileExists(file)) {
                 try {
-                    val intentData = FileProvider.getUriForFile(ZLibrary.getAppContext(), authority, file)
+                    val intentData =
+                        FileProvider.getUriForFile(ZLibrary.getAppContext(), authority, file)
                     val mIntent = getIntent(Intent(Intent.ACTION_VIEW).apply {
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         setDataAndType(intentData, "application/vnd.android.package-archive")
@@ -112,8 +116,31 @@ class IntentUtil {
             }, isNewTask)
         }
 
+        @Deprecated(
+            "IntentUtil.getNotifyMediaStoreIntent(file) was deprecated in API level 29.",
+            ReplaceWith(
+                "AndroidUtil.notifyMediaStore(file)",
+                "io.zhihao.library.android.util.AndroidUtil"
+            )
+        )
         fun getNotifyMediaStoreIntent(file: File): Intent {
             return Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file))
+        }
+
+        fun getOpenWebBrowserIntent(url: String): Intent {
+            return getOpenWebBrowserIntent(Uri.parse(url))
+        }
+
+        fun getOpenWebBrowserIntent(uri: Uri): Intent {
+            return Intent(Intent.ACTION_VIEW, uri)
+        }
+
+        fun openWebBrowser(context: Context, url: String) {
+            context.startActivity(getOpenWebBrowserIntent(url))
+        }
+
+        fun openWebBrowser(context: Context, uri: Uri) {
+            context.startActivity(getOpenWebBrowserIntent(uri))
         }
     }
 }
