@@ -1,5 +1,6 @@
 package io.zhihao.library.android.util
 
+import android.media.MediaScannerConnection
 import android.os.Build
 import io.zhihao.library.android.ZLibrary
 import java.io.File
@@ -17,8 +18,7 @@ class AndroidUtil {
         fun notifyMediaStore(file: File): Boolean {
             return if (file.isFile) {
                 try {
-                    ZLibrary.getAppContext()
-                        .sendBroadcast(IntentUtil.getNotifyMediaStoreIntent(file))
+                    MediaScannerConnection.scanFile(ZLibrary.getAppContext(), arrayOf(file.toString()), null, null)
                     true
                 } catch (e: Exception) {
                     e.printStackTrace()
