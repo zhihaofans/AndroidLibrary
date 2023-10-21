@@ -37,13 +37,16 @@ class AlertUtil(context: Context) {
     }
 
     fun showInputAlert(
-        title: String, inputText: String? = "",
+        title: String,
+        inputText: String? = "",
+        maxLines: Int? = 1,
         onClick: (text: String, dialog: DialogInterface) -> Unit
     ) {
         val builder = AlertDialog.Builder(_context)
         builder.setTitle(title)
         val input = EditText(_context)
         input.inputType = InputType.TYPE_CLASS_TEXT
+        input.maxLines = maxLines ?: 1
         input.setText(inputText)
         builder.setView(input)
         builder.setPositiveButton("OK") { dialog, which ->
