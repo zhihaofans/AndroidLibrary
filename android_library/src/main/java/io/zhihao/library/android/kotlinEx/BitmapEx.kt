@@ -12,3 +12,7 @@ import io.zhihao.library.android.util.EncodeUtil
 
  */
 fun Bitmap.toBase64String(): String? = EncodeUtil.bitmapToBase64String(this)
+
+fun Bitmap?.isEmpty(): Boolean {
+    return (this == null) || (this.width == 0) || (this.height == 0)
+}
