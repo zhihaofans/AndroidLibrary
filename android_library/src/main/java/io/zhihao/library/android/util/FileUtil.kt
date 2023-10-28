@@ -3,10 +3,12 @@ package io.zhihao.library.android.util
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Environment
+import android.util.Log
 import io.zhihao.library.android.kotlinEx.getBytes
 import io.zhihao.library.android.kotlinEx.remove
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 
 /**
  * 在此写用途
@@ -168,7 +170,9 @@ class FileUtil {
             return bitmap.compress(imageFormat, 100, FileOutputStream(filePath))
         }
 
-        // Folder
+        // Folder/Dir
+        fun createDir(filePath: String) = createFolder(filePath)
+        fun createDir(file: File) = createFolder(file)
         fun createFolder(filePath: String): Boolean {
             return if (filePath.isEmpty()) {
                 false
@@ -185,12 +189,49 @@ class FileUtil {
         fun createFolder(file: File): Boolean {
             return try {
                 if (file.exists()) {
-                    file.isDirectory
+                    false
                 } else {
                     file.mkdirs()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
+                false
+            }
+        }
+
+        /**
+         * 判断目录是否存在, 不存在则判断是否创建成功
+         * @param dirPath 目录路径
+         * @return `true` 存在或创建成功, `false` 不存在或创建失败
+         */
+        fun createOrExistsDir(dirPath: String): Boolean {
+            return createOrExistsDir(getFileByPath(dirPath))
+        }
+
+        /**
+         * 判断目录是否存在, 不存在则判断是否创建成功
+         * @param file 文件
+         * @return `true` 存在或创建成功, `false` 不存在或创建失败
+         */
+        fun createOrExistsDir(file: File?): Boolean {
+            // 如果存在, 是目录则返回 true, 是文件则返回 false, 不存在则返回是否创建成功
+            return file != null && if (file.exists()) file.isDirectory else file.mkdirs()
+        }
+
+        /**
+         * 判断文件是否存在, 存在则在创建之前删除
+         * @param file 文件
+         * @return `true` 创建成功, `false` 创建失败
+         */
+        fun createFileByDeleteOldFile(file: File?): Boolean {
+            if (file == null) return false
+            // 文件存在并且删除失败返回 false
+            if (file.exists() && !file.delete()) return false
+            // 创建目录失败返回 false
+            return if (!createOrExistsDir(file.parentFile)) false else try {
+                file.createNewFile()
+            } catch (e: IOException) {
+                Log.e("FileUtil.createFileByDeleteOldFile", e.message.toString())
                 false
             }
         }
