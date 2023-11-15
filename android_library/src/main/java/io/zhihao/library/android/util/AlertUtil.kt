@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.text.InputType
 
 import android.widget.EditText
+import android.widget.LinearLayout
 
 
 class AlertUtil(context: Context) {
@@ -14,6 +15,7 @@ class AlertUtil(context: Context) {
     fun showListAlert(
         title: String,
         itemList: Array<String>,
+        setCanceledOnTouchOutside: Boolean = true,
         onClick: (dialog: DialogInterface, index: Int) -> Unit
     ): AlertDialog {
         val builder = AlertDialog.Builder(_context)
@@ -31,7 +33,7 @@ class AlertUtil(context: Context) {
             }
 
         val dialog: AlertDialog = builder.create()
-        dialog.setCanceledOnTouchOutside(true)
+        dialog.setCanceledOnTouchOutside(setCanceledOnTouchOutside)
         dialog.show()
         return dialog
     }
@@ -53,6 +55,40 @@ class AlertUtil(context: Context) {
             onClick.invoke(
                 input.text.toString(),
                 dialog
+            )
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+        builder.show()
+    }
+
+    fun showLoginAlert(
+        title: String,
+        message: String = "",
+        username: String = "",
+        password: String = "",
+        onClick: (username: String, password: String) -> Unit
+    ) {
+        val builder = AlertDialog.Builder(_context)
+        builder.setTitle(title)
+        builder.setMessage(message)
+        val userInput = EditText(_context)
+        userInput.hint = "Username"
+        userInput.inputType = InputType.TYPE_CLASS_TEXT
+        userInput.setText(username)
+        val pwInput = EditText(_context)
+        pwInput.hint = "Password"
+        pwInput.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+        pwInput.setText(password)
+        val layout = LinearLayout(_context)
+        layout.orientation = LinearLayout.VERTICAL
+        layout.addView(userInput)
+        layout.addView(pwInput)
+        builder.setView(layout)
+        builder.setPositiveButton("OK") { dialog, which ->
+            onClick.invoke(
+                userInput.text.toString(),
+                pwInput.text.toString()
             )
             dialog.dismiss()
         }
