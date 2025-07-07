@@ -10,7 +10,7 @@ plugins {
     id 'maven-publish'
 }
 group = 'com.github.zhihaofans'
-version = '0.0.13'
+version = '0.0.14-remake-a1'
 android {
     compileSdk 34
     defaultConfig {
@@ -32,6 +32,8 @@ android {
 }
 dependencies {
     api 'androidx.appcompat:appcompat:1.7.1'
+    api platform("androidx.compose:compose-bom:2025.06.01") // 推荐使用 BOM 管理 Compose 版本
+    api 'androidx.compose.material3:material3:1.3.2' // Material 3 主组件包
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     api 'androidx.test.espresso:espresso-core:3.6.1'
@@ -51,13 +53,22 @@ afterEvaluate {
                 from components.release
                 groupId = "com.github.zhihaofans"
                 artifactId = 'AndroidLibrary'
-                version = '0.0.13'
+                version = '0.0.14-remake-a1'
             }
         }
     }
 }
 repositories {
+    //mavenCentral()
+    google {
+        content {
+            includeGroupByRegex("com\\.android.*")
+            includeGroupByRegex("com\\.google.*")
+            includeGroupByRegex("androidx.*")
+        }
+    }
     mavenCentral()
+    gradlePluginPortal()
 }
 
 task deleteJar(type: Delete) {
