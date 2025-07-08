@@ -29,7 +29,7 @@ class ZLibrary {
         }
 
         fun getZLibraryVersion(): String {
-            return "0.0.12"
+            return "0.0.14-remake-a1"
         }
     }
 }
