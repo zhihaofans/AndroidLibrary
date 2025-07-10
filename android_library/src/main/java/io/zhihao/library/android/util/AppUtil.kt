@@ -1,6 +1,7 @@
 package io.zhihao.library.android.util
 
 import android.app.WallpaperManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -148,6 +149,16 @@ class AppUtil {
             val mIntent = IntentUtil.getLaunchAppIntent(packageName)
             return try {
                 this.startActivity(mIntent ?: return false)
+                true
+            } catch (e: Exception) {
+                e.printStackTrace()
+                false
+            }
+        }
+        fun launchApp(context: Context, packageName: String): Boolean {
+            val mIntent = context.packageManager.getLaunchIntentForPackage(packageName)
+            return try {
+                mIntent?.let { context.startActivity(it) }
                 true
             } catch (e: Exception) {
                 e.printStackTrace()
