@@ -146,6 +146,9 @@ class AppUtil {
         }
 
         fun launchApp(packageName: String): Boolean {
+            if (packageName.isEmpty()){
+                return false
+            }
             val mIntent = IntentUtil.getLaunchAppIntent(packageName)
             return try {
                 this.startActivity(mIntent ?: return false)
@@ -156,6 +159,9 @@ class AppUtil {
             }
         }
         fun launchApp(context: Context, packageName: String): Boolean {
+            if (packageName.isEmpty()){
+                return false
+            }
             val mIntent = context.packageManager.getLaunchIntentForPackage(packageName)
             return try {
                 mIntent?.let { context.startActivity(it) }
