@@ -15,7 +15,7 @@ import io.zhihao.library.android.util.SystemServiceUtil
 fun ApplicationInfo.getAppName(): String =
     this.loadLabel(SystemServiceUtil.getPackageManager()).toString()
 
-fun PackageInfo.getAppName(): String = this.applicationInfo.getAppName()
+fun PackageInfo.getAppName(): String = this.applicationInfo!!.getAppName()
 
 fun ApplicationInfo.getAppIcon(): Drawable? = this.loadIcon(SystemServiceUtil.getPackageManager())
-fun PackageInfo.getAppIcon(): Drawable? = this.applicationInfo.getAppIcon()
+fun PackageInfo.getAppIcon(): Drawable? = this.applicationInfo!!.getAppIcon()
