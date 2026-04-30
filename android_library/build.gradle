@@ -15,7 +15,6 @@ android {
     compileSdk 36
     defaultConfig {
         minSdkVersion 26
-        targetSdkVersion 34
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
@@ -29,6 +28,12 @@ android {
         targetCompatibility JavaVersion.VERSION_21
     }
     namespace 'io.zhihao.library.android'
+    lint {
+        targetSdk 34
+    }
+    testOptions {
+        targetSdk 34
+    }
 }
 dependencies {
     api 'androidx.appcompat:appcompat:1.7.1'
