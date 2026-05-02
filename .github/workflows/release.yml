@@ -1,0 +1,41 @@
+name: Build Jar Release
+
+on:
+  push:
+    tags:
+      - 'v*'   # 例如 v1.0.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Grant execute permission
+        run: chmod +x gradlew
+
+      - name: Build Jar
+        run: ./gradlew createFullJarRelease
+
+      - name: Find Jar
+        run: |
+          find . -name "*.jar"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            android_library/build/libs/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
