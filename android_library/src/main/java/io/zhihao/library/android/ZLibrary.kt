@@ -3,7 +3,7 @@ package io.zhihao.library.android
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
-
+import io.zhihao.library.android.BuildConfig
 
 /**
  * Created by zhihaofans on 2019/4/4.
@@ -28,8 +28,7 @@ class ZLibrary {
             }
         }
 
-        fun getZLibraryVersion(): String {
-            return "0.0.14-remake-a1"
-        }
+        fun getZLibraryVersion() = BuildConfig.LIB_VERSION
+        fun isDebug() = BuildConfig.DEBUG
     }
 }

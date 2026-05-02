@@ -10,12 +10,20 @@ plugins {
     id 'maven-publish'
 }
 group = 'com.github.zhihaofans'
-version = '0.0.14-remake-a1'
+def lib_version = '0.0.15-a2'
+version = lib_version
 android {
-    compileSdk 36
+    compileSdk = 37
     defaultConfig {
-        minSdkVersion 26
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        minSdk = 26
+        testInstrumentationRunner = 'androidx.test.runner.AndroidJUnitRunner'
+        buildConfigField "String", "LIB_VERSION", "\"${lib_version}\""
+        buildConfigField "String", "VERSION_NAME", "\"${lib_version}\""
+    }
+    buildFeatures {
+
+        buildConfig = true
+
     }
     buildTypes {
         release {
@@ -27,12 +35,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_21
         targetCompatibility JavaVersion.VERSION_21
     }
-    namespace 'io.zhihao.library.android'
+    namespace = 'io.zhihao.library.android'
     lint {
-        targetSdk 34
+        targetSdk = 34
     }
     testOptions {
-        targetSdk 34
+        targetSdk = 34
     }
 }
 dependencies {
@@ -58,13 +66,12 @@ afterEvaluate {
                 from components.release
                 groupId = "com.github.zhihaofans"
                 artifactId = 'AndroidLibrary'
-                version = '0.0.14-remake-a1'
+                version = lib_version
             }
         }
     }
 }
 repositories {
-    //mavenCentral()
     google {
         content {
             includeGroupByRegex("com\\.android.*")
