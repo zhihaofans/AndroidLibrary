@@ -2,7 +2,6 @@ package io.zhihao.library.android.util
 
 import android.content.Context
 import android.content.Intent
-import io.zhihao.library.android.util.AppUtil.Companion.startActivity
 
 class ShareUtil(context: Context) {
     private val _context = context
