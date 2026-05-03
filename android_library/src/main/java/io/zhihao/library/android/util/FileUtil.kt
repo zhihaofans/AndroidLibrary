@@ -148,7 +148,7 @@ class FileUtil {
 
         @SuppressLint("NewApi")
         fun saveImageWEBP(bitmap: Bitmap, filePath: String): Boolean {
-            return if (AndroidUtil.isMoreThenSDKR()) {
+            return if (AndroidUtil.isAtLeastAndroidR()) {
                 this.saveImage(bitmap, filePath, Bitmap.CompressFormat.WEBP_LOSSLESS)
             } else {
                 this.saveImage(bitmap, filePath, Bitmap.CompressFormat.WEBP)

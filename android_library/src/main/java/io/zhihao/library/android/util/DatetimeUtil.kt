@@ -2,7 +2,8 @@ package io.zhihao.library.android.util
 
 import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 /**
  * 在此写用途
@@ -12,29 +13,34 @@ import java.util.*
  * @date: 2019-04-02 17:29
 
  */
-class DatetimeUtil {
-    companion object {
-        fun unixTimeStampMill(): Long = System.currentTimeMillis()
-        fun unixTimeStamp(): Long = System.currentTimeMillis() / 1000L
+object DatetimeUtil {
 
-        @SuppressLint("SimpleDateFormat")
-        fun nowDatetime(withoutTime: Boolean = false): String {
-            val formatter = SimpleDateFormat(if (withoutTime) "yyyy/MM/dd" else "yyyy/MM/dd HH:mm:ss")
-            val curDate = Date()
-            return formatter.format(curDate)
-        }
+    fun unixTimestampMillis(): Long = System.currentTimeMillis()
 
-        fun unixTime2ChinaDate(time: Long): String {
-            return unixTime2date(time, Locale.CHINA)
-        }
+    fun unixTimestampSeconds(): Long = System.currentTimeMillis() / 1000
 
-        fun unixTime2date(time: Int, locale: Locale): String {
-            return SimpleDateFormat("yyyy/MM/dd HH:mm:ss", locale).format(Date(time.toLong())) as String
-        }
+    @SuppressLint("SimpleDateFormat")
+    fun nowDatetime(withoutTime: Boolean = false): String {
+        val pattern =
+            if (withoutTime) "yyyy/MM/dd"
+            else "yyyy/MM/dd HH:mm:ss"
 
-        fun unixTime2date(time: Long, locale: Locale): String {
-            return SimpleDateFormat("yyyy/MM/dd HH:mm:ss", locale).format(Date(time)) as String
-        }
+        return SimpleDateFormat(pattern).format(Date())
     }
 
+    fun unixTime2ChinaDate(seconds: Long): String {
+        return unixTime2date(seconds, Locale.CHINA, true)
+    }
+
+    fun unixTime2date(
+        time: Long,
+        locale: Locale = Locale.getDefault(),
+        isSeconds: Boolean = false
+    ): String {
+        val millis = if (isSeconds) time * 1000 else time
+        return SimpleDateFormat(
+            "yyyy/MM/dd HH:mm:ss",
+            locale
+        ).format(Date(millis))
+    }
 }

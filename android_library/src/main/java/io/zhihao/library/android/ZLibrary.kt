@@ -17,16 +17,11 @@ class ZLibrary {
 
         fun init(context: Context) {
             this.mContext = context.applicationContext
-            Log.d("ZLibrary.init", "yes")
+            Log.d("ZLibrary.init.ver", getZLibraryVersion())
         }
 
-        fun getAppContext(): Context {
-            if (mContext == null) {
-                throw NullPointerException("请先调用init()方法")
-            } else {
-                return mContext!!
-            }
-        }
+
+        fun getAppContext(): Context = requireNotNull(mContext) { "请先调用 init() 方法" }
 
         fun getZLibraryVersion() = BuildConfig.LIB_VERSION
         fun isDebug() = BuildConfig.DEBUG
