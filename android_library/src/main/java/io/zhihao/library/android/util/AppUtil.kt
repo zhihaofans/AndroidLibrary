@@ -7,8 +7,8 @@ import android.content.pm.PackageManager
 import androidx.annotation.RequiresPermission
 import androidx.core.content.pm.PackageInfoCompat
 import io.zhihao.library.android.ZLibrary
+import io.zhihao.library.android.kotlinEx.appName
 import io.zhihao.library.android.kotlinEx.collapseNotificationBar
-import io.zhihao.library.android.kotlinEx.getAppName
 import java.io.File
 
 
@@ -117,8 +117,7 @@ object AppUtil {
     fun getAppName(packageName: String): String? {
         return if (this.isAppInstalled(packageName)) {
             try {
-                SystemServiceUtil.getPackageManager().getPackageInfo(packageName, 0)
-                    .getAppName()
+                SystemServiceUtil.getPackageManager().getPackageInfo(packageName, 0).appName
             } catch (e: Exception) {
                 e.printStackTrace()
                 null
