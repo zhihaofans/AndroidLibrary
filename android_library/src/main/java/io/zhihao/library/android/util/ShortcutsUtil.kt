@@ -5,7 +5,14 @@ import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
+import androidx.core.graphics.drawable.toBitmap
 import io.zhihao.library.android.ZLibrary
+import io.zhihao.library.android.kotlinEx.appName
+import io.zhihao.library.android.kotlinEx.getAppIcon
+import io.zhihao.library.android.kotlinEx.isNotNullAndEmpty
 
 /**
  * 在此写用途
@@ -20,6 +27,28 @@ class ShortcutsUtil {
 
     private val mContext = ZLibrary.getAppContext()
     private val shortcutManager = mContext.getSystemService(ShortcutManager::class.java)
+    fun hasShortcut(id: String): Boolean {
+        return ShortcutManagerCompat.getDynamicShortcuts(mContext).any { it.id == id }
+    }
+
+    fun pushShortcut(id: String, intent: Intent, shortcutName: String, icon: IconCompat) {
+        if (id.isNotNullAndEmpty()) {
+            val shortcut =
+                ShortcutInfoCompat.Builder(mContext, id)
+                    .setShortLabel(shortcutName)
+//                    .setLongLabel(appInfo.appName)
+                    .setIcon(icon)
+                    .setIntent(intent)
+                    .build()
+            ShortcutManagerCompat.pushDynamicShortcut(mContext, shortcut)
+        }
+    }
+
+    fun removeShortcut(shortCutId: String) {
+        ShortcutManagerCompat.removeDynamicShortcuts(
+            mContext, listOf(shortCutId)
+        )
+    }
 
     fun addPinShortcut(id: String, intent: Intent, shortcutName: String, icon: Icon): Boolean {
         return if (shortcutManager.isRequestPinShortcutSupported) {
@@ -29,9 +58,12 @@ class ShortcutsUtil {
                 .setShortLabel(shortcutName)
                 .setIntent(intent)
                 .build()
-            val pinnedShortcutCallbackIntent = shortcutManager.createShortcutResultIntent(pinShortcutInfo)
-            val successCallback = PendingIntent.getBroadcast(mContext, 0, pinnedShortcutCallbackIntent,
-                PendingIntent.FLAG_IMMUTABLE)
+            val pinnedShortcutCallbackIntent =
+                shortcutManager.createShortcutResultIntent(pinShortcutInfo)
+            val successCallback = PendingIntent.getBroadcast(
+                mContext, 0, pinnedShortcutCallbackIntent,
+                PendingIntent.FLAG_IMMUTABLE
+            )
             try {
                 shortcutManager.requestPinShortcut(pinShortcutInfo, successCallback.intentSender)
             } catch (e: Exception) {
