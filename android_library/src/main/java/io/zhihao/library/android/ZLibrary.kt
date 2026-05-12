@@ -23,7 +23,7 @@ class ZLibrary {
 
         fun getAppContext(): Context = requireNotNull(mContext) { "请先调用 init() 方法" }
 
-        fun getZLibraryVersion() = BuildConfig.LIB_VERSION
+        fun getZLibraryVersion() = BuildConfig.IO_ZHIHAO_LIB_VERSION
         fun isDebug() = BuildConfig.DEBUG
     }
 }

@@ -19,8 +19,7 @@ android {
     defaultConfig {
         minSdk = 26
         testInstrumentationRunner = 'androidx.test.runner.AndroidJUnitRunner'
-        buildConfigField "String", "LIB_VERSION", "\"${lib_version}\""
-        buildConfigField "String", "VERSION_NAME", "\"${lib_version}\""
+        buildConfigField "String", "IO_ZHIHAO_LIB_VERSION", "\"${lib_version}\""
     }
     buildFeatures {
 
