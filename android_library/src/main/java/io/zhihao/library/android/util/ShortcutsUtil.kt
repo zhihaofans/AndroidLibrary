@@ -24,11 +24,26 @@ import io.zhihao.library.android.kotlinEx.isNotNullAndEmpty
  */
 
 class ShortcutsUtil {
-
     private val mContext = ZLibrary.getAppContext()
     private val shortcutManager = mContext.getSystemService(ShortcutManager::class.java)
+    fun getCount(): Int {
+        return getAllShortcuts().size
+    }
+
+    fun getMaxCount(): Int {
+        return ShortcutManagerCompat.getMaxShortcutCountPerActivity(mContext)
+    }
+
+    fun hasFullShortcuts(): Boolean {
+        return getCount() >= getMaxCount()
+    }
+
+    fun getAllShortcuts(): List<ShortcutInfoCompat> {
+        return ShortcutManagerCompat.getDynamicShortcuts(mContext)
+    }
+
     fun hasShortcut(id: String): Boolean {
-        return ShortcutManagerCompat.getDynamicShortcuts(mContext).any { it.id == id }
+        return getAllShortcuts().any { it.id == id }
     }
 
     fun pushShortcut(id: String, intent: Intent, shortcutName: String, icon: IconCompat) {
