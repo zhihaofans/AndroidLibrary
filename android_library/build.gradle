@@ -12,7 +12,7 @@ plugins {
     id 'maven-publish'
 }
 group = 'com.github.zhihaofans'
-def lib_version = '0.0.19'
+def lib_version = '0.0.20'
 version = lib_version
 android {
     compileSdk = 37
