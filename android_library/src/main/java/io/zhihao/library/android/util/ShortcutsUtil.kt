@@ -59,6 +59,10 @@ class ShortcutsUtil {
         }
     }
 
+    fun removeAllShortcuts() {
+        ShortcutManagerCompat.removeAllDynamicShortcuts(mContext)
+    }
+
     fun removeShortcut(shortCutId: String) {
         ShortcutManagerCompat.removeDynamicShortcuts(
             mContext, listOf(shortCutId)
